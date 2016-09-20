@@ -606,8 +606,8 @@ function! s:Path.rename(newPath)
         throw "NERDTree.InvalidArgumentsError: Invalid newPath for renaming = ". a:newPath
     endif
 
-    let success =  rename(self.str(), a:newPath)
-    if success != 0
+    call system("git mv " . self.str() . " " . a:newPath)
+    if v:shell_error != 0
         throw "NERDTree.PathRenameError: Could not rename: '" . self.str() . "'" . 'to:' . a:newPath
     endif
     call self.readInfoFromDisk(a:newPath)
